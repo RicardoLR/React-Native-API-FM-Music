@@ -53,8 +53,20 @@ export default class ArtisBox extends Component {
 const styles = StyleSheet.create({
 
 	artistBox: {
+		margin: 5,
 		backgroundColor: 'white',	
-		flexDirection: 'row'
+		flexDirection: 'row',
+		
+		// solo para IOS
+		shadowOpacity: .2,
+		shadowOffset: {
+			height: 1,
+			width: -2  // - izq, + der
+		},
+
+		// solo para android
+		elevation: 4,
+
 	},
 	info:{
 		flex: 1, // Toma todo el espacio
