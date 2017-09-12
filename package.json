@@ -8,7 +8,9 @@
 	},
 	"dependencies": {
 		"react": "~15.3.1",
-		"react-native": "0.37.0"
+		"react-native": "0.37.0",
+		"react-native-vector-icons": "^4.3.0",
+		"react-native-web-player": "^1.10.1"
 	},
 	"devDependencies": {
 		"babel-jest": "21.0.2",
