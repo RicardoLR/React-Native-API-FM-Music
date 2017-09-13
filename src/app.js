@@ -9,48 +9,35 @@ import React, { Component } from 'react';
 import {
 	AppRegistry,
 	StyleSheet,
-	Text,
-	View,
-	Image,
-
-	ListView,
-	TouchableHighlight,
-	RecyclerViewBackedScrollView
+	View
 } from 'react-native';
 
 
-import ArtistBox from './ArtistBox';
+import ArtistList from './ArtistList';
 
+import {getArtists} from './api-client';
 
 class Music extends Component {
 
-	
-	constructor(props) {
-		super(props);
-
-		const artist = {
-			image : 'https://previews.123rf.com/images/takra/takra1111/takra111100038/11276964-3d-neon-treble-clef-on-a-dark-background-Stock-Vector-music.jpg',
-			name : 'Richi Lopez',
-			likes : 200,
-			comments :140
-		}
-		const artists = Array(500).fill(artist);
-		
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		this.state = {
-			dataSource: ds.cloneWithRows( artists )
-		};
+	state = {
+		artists: []
+	}
+	componentDidMount(){
+		getArtists()
+		.then( 
+			 artists => this.setState({ artists }) 
+		)
 	}
 
 	render() {
-
-
+		const artists = this.state.artists
+		
 		return (
-			<ListView style={styles.container}
-				dataSource={this.state.dataSource}
-				renderRow={(artist) => <ArtistBox artist={artist} /> }
-			/>
+			<View style={styles.container}>
+				
+				<ArtistList artists={artists} />
 
+			</View>
 		);
 	}
 }

@@ -18,6 +18,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class ArtisBox extends Component {
 
+	constructor(props) {
+        super(props);
+	}
 
 	render() {
 
