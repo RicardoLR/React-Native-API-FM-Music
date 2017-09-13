@@ -15,11 +15,11 @@ export function getArtists() {
       .then( data => data.topartists.artist )
       .then( artists => artists.map(a => {
         return {
-            id: a.mbid,            
-            image: a.image[3]['#text'],
-            name: a.name,
-            likes: 140,
-            comments: 140
+          id: a.mbid,
+          image: a.image[3]['#text'],
+          name: a.name,
+          likes: 140,
+          comments: 140
         }
       }))
       .catch((error) => {console.warn("artists error:", error)})

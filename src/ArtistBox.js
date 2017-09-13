@@ -23,15 +23,15 @@ export default class ArtisBox extends Component {
 	}
 
 	render() {
-
-        const { image, name, likes, comments } = this.props.artist
+		
+        const { id, image, name, likes, comments } = this.props.artist
 
         
 		return (
 			
             <View  style={styles.artistBox}>
-                <Image style={styles.image} source={{ uri: image }} />
-                
+				<Image style={styles.image} source={{ uri: image }} />
+
                 <View style={styles.info}> 
                     <Text style={styles.name}> {name} </Text>
                     
@@ -39,7 +39,7 @@ export default class ArtisBox extends Component {
                         
                         <View style={styles.iconContainer}> 
                             <Icon name="ios-heart-outline" size={30} color="gray" />
-                            <Text style={styles.count}> {likes} </Text>
+                            <Text style={styles.count}> {likes} - {id} </Text>
                         </View>
                         <View style={styles.iconContainer}> 
                             <Icon name="ios-chatboxes-outline" size={30} color="gray" />

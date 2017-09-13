@@ -23,11 +23,22 @@ export default class ArtistList extends Component {
 	
 	constructor(props) {
         super(props);
-        
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		
+		this.state = {
+			artistDataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+		};
+		
+		/*  sustituido por updateDataSources:
 		this.state = {
 			dataSource: ds.cloneWithRows( props.artists )
 		};
+		*/
+	}
+
+	componentDidMount(){			
+		this.updateDataSources(this.props.artists)
+
+		console.warn("this.props.artists",this.props.artists);
 	}
 
 	/**
@@ -36,19 +47,23 @@ export default class ArtistList extends Component {
 	 */
 	componentWillReceiveProps( nextProps ){
 		if( nextProps.artists !== this.props.artists ){
-			this.setState({ 
-				dataSource: this.state.dataSource.cloneWithRows( nextProps ) 
-			})
+			this.updateDataSources(nextProps.artists)
 		}
 	}
 
-	render() {
+	updateDataSources(newData){
+		this.setState({ 
+			artistDataSource: this.state.artistDataSource.cloneWithRows( newData ) 
+		})
+	}
 
+	
+	render() {
 
 		return (
 			<ListView style={styles.container}
 				enableEmptySections={true}
-				dataSource={this.state.dataSource}
+				dataSource={this.state.artistDataSource}
 				renderRow={(artist) => <ArtistBox artist={artist} /> }
 			/>
 
