@@ -22,3 +22,11 @@ allprojects {
         }
     }
 }
+
+project(':react-native-fbsdk') {
+  configurations.all {
+    resolutionStrategy {
+      force 'com.facebook.android:facebook-android-sdk:4.22.1'
+    }
+  }
+}
