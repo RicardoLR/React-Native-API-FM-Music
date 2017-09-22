@@ -1,18 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import React, { Component } from 'react';
-
 import {
-    StyleSheet,
-    
+	StyleSheet,
 	ListView,
-	TouchableHighlight,
-	RecyclerViewBackedScrollView
+	 
+	ActivityIndicator,
+	TouchableOpacity,
 } from 'react-native';
+
+import { Actions } from 'react-native-router-flux'
 
 
 import ArtistBox from './ArtistBox';
@@ -28,7 +24,7 @@ export default class ArtistList extends Component {
 			artistDataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		};
 		
-		/*  sustituido por updateDataSources:
+		/*  sustituido por _updateDataSources:
 		this.state = {
 			dataSource: ds.cloneWithRows( props.artists )
 		};
@@ -36,7 +32,7 @@ export default class ArtistList extends Component {
 	}
 
 	componentDidMount(){			
-		this.updateDataSources(this.props.artists)
+		this._updateDataSources(this.props.artists)
 
 		console.warn("this.props.artists",this.props.artists);
 	}
@@ -47,24 +43,33 @@ export default class ArtistList extends Component {
 	 */
 	componentWillReceiveProps( nextProps ){
 		if( nextProps.artists !== this.props.artists ){
-			this.updateDataSources(nextProps.artists)
+			this._updateDataSources(nextProps.artists)
 		}
 	}
 
-	updateDataSources(newData){
+	_updateDataSources(newData){
 		this.setState({ 
 			artistDataSource: this.state.artistDataSource.cloneWithRows( newData ) 
 		})
 	}
 
-	
+	_handlePressNextView(artist){
+		Actions.artistDetail({ artist })		
+	}
+
 	render() {
 
 		return (
 			<ListView style={styles.container}
 				enableEmptySections={true}
 				dataSource={this.state.artistDataSource}
-				renderRow={(artist) => <ArtistBox artist={artist} /> }
+				renderRow={(artist) => { 
+					return( 
+						<TouchableOpacity onPress={ ()=> this._handlePressNextView(artist) } > 
+							<ArtistBox artist={artist} />
+						</TouchableOpacity>
+					)
+				} }
 			/>
 
 		);
