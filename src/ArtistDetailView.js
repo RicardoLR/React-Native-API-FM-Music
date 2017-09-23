@@ -86,7 +86,6 @@ export default class ArtistDetailView extends Component {
             </View>
           </TouchableOpacity>
           
-          <Text style={styles.title}>Comentarios</Text>
           <View style={styles.backButton} />
         </View>
         
