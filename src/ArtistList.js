@@ -33,8 +33,6 @@ export default class ArtistList extends Component {
 
 	componentDidMount(){			
 		this._updateDataSources(this.props.artists)
-
-		console.warn("this.props.artists",this.props.artists);
 	}
 
 	/**

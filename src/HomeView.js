@@ -2,53 +2,46 @@
 import React, { Component } from 'react';
 
 import {
-	StyleSheet,
-	View
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
 
-import {
-	Scene,
-	Router
-} from 'react-native-router-flux';
+import ArtistList from './ArtistList'
 
-import ArtistList from './ArtistList';
-
-import {getArtists} from './api-client';
-
+import { getArtists } from './api-client'
 
 export default class HomeView extends Component {
+  
+	state = {
+    	artists: null
+  	}
 
-	constructor() {
-		super();
-		
-		this.state = {
-			artists: []
-		}
-	}
+  	componentDidMount() {
+    	getArtists().then(artists => this.setState({ artists }))
+  	}
 
-	componentDidMount() {
-		console.warn("componentDidMount")	
-
-		getArtists().then( artists => {
-			this.setState({ artists })
-		})
-	}
-
-	render(){
+	/** en return, IF =>  {!artists && <ActivityIndicator size="large" />} */
+	render() { 
 		const artists = this.state.artists
-		
+
 		return (
 			<View style={styles.container}>
-				<ArtistList artists={artists} />					
+				{!artists && <ActivityIndicator size="large" />}
+				{artists && <ArtistList artists={artists} />}
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: 'lightgray'
-	}
-
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgray',
+    paddingTop: Platform.select({
+      ios: 30,
+      android: 10
+    }),
+  },
 });

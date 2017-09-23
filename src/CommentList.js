@@ -16,6 +16,7 @@ export default class CommentList extends Component {
 
   constructor(props) {
     super(props);
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds
@@ -23,16 +24,16 @@ export default class CommentList extends Component {
   }
 
   componentDidMount() {
-    this.updateDataSource(this.props.comments)
+    this._updateDataSource(this.props.comments)
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.comments !== this.props.comments) {
-      this.updateDataSource(newProps.comments)
+      this._updateDataSource(newProps.comments)
     }
   }
 
-  updateDataSource = data => {
+  _updateDataSource = data => {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data)
     })

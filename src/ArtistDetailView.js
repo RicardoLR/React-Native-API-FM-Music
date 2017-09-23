@@ -29,35 +29,38 @@ export default class ArtistDetailView extends Component {
   }
 
   componentDidMount() {
-    this.getArtistCommentsRef().on('child_added', this.addComment);
+    this._getArtistCommentsRef().on('child_added', this._addComment);
   }
 
   componentWillUnmount() {
-    this.getArtistCommentsRef().off('child_added', this.addComment);
+    this._getArtistCommentsRef().off('child_added', this._addComment);
   }
 
 
-  addComment = (data) => {
+  _addComment = (data) => {
     const comment = data.val()
     this.setState({
       comments: this.state.comments.concat(comment)
     })
   }
 
-  getArtistCommentsRef = () => {
+  _getArtistCommentsRef = () => {
     const { id } = this.props.artist
     return firebaseDatabase.ref(`comments/${id}`)
   }
   
-  handleBackButtonPress() {
+  _handleBackButtonPress() {
     Actions.pop()
   }
 
-  handleSend = () => {
+  _handleSend = () => {
     const { text } = this.state
     const { uid, photoURL } = firebaseAuth.currentUser
-    const artistCommentsRef = this.getArtistCommentsRef()
+    const artistCommentsRef = this._getArtistCommentsRef()
+
+    // obtenemos referencia del comment/ por id
     var newCommentRef = artistCommentsRef.push();
+    // Enviamos a la DB con .set({...})
     newCommentRef.set({
       text,
       userPhoto: photoURL,
@@ -66,7 +69,7 @@ export default class ArtistDetailView extends Component {
     this.setState({ text: '' })
   }
 
-  handleChangeText = (text) => this.setState({text})
+  _handleChangeText = (text) => this.setState({text})
 
   render() {
     const { artist } = this.props.artist
@@ -77,7 +80,7 @@ export default class ArtistDetailView extends Component {
         
         <View style={styles.header}>
           
-          <TouchableOpacity onPress={this.handleBackButtonPress}>
+          <TouchableOpacity onPress={this._handleBackButtonPress}>
             <View style={styles.backButton}>
               <Icon name="ios-arrow-round-back" size={32} />
             </View>
@@ -88,6 +91,8 @@ export default class ArtistDetailView extends Component {
         </View>
         
         <ArtistBox artist={artist} />
+        
+        
         <CommentList comments={comments} />
         
         <View style={styles.inputContainer}>
@@ -95,10 +100,10 @@ export default class ArtistDetailView extends Component {
             style={styles.input}
             value={this.state.text}
             placeholder="Opina sobre este artista"
-            onChangeText={this.handleChangeText}
+            onChangeText={this._handleChangeText}
           />
           
-          <TouchableOpacity onPress={this.handleSend}>
+          <TouchableOpacity onPress={this._handleSend}>
             <Icon name="ios-send-outline" size={30} color="gray" />
           </TouchableOpacity>
         </View>
@@ -108,10 +113,12 @@ export default class ArtistDetailView extends Component {
 }
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     backgroundColor: 'lightgray',
   },
+  
   header: {
     height: 70,
     backgroundColor: 'white',
@@ -129,6 +136,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
   },
+  
   title: {
     fontSize: 20,
     textAlign: 'center',
@@ -139,8 +147,11 @@ const styles = StyleSheet.create({
     width: 40,
     marginRight: 5,
   },
+
+  // solucionar problema del placeholder arriva del input
   input: {
     height: 50,
     flex: 1,
   }
+
 });
