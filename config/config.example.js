@@ -1,5 +1,8 @@
 
-module.exports = {
-    'key': '',
-    'secret': ''
+export const variablesAuth = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    storageBucket: "",
+    messagingSenderId: ""
 };

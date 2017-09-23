@@ -25,7 +25,6 @@ import { Actions } from 'react-native-router-flux'
 
 export default class LoginView extends Component {
   
-  
   constructor(props) {
     super(props);
 
@@ -34,7 +33,6 @@ export default class LoginView extends Component {
 		}
   }
   
-
   componentWillMount() {
     this._authenticateUser()
   }
@@ -58,20 +56,18 @@ export default class LoginView extends Component {
 
       const credential = FacebookAuthProvider.credential(accessToken)
 
-      console.warn("_authenticateUser   credential:", credential);
 
+      console.warn("_authenticateUser   firebaseAuth:", firebaseAuth);      
 
-      firebaseAuth.signInWithCredential(credential).then( (credentials) => {
-        console.warn("signInWithCredential   credentials:", credentials);
+      firebaseAuth.signInWithCredential(credential).then( () => {
+        console.warn("signInWithCredential");
         Actions.root()
       })
       .catch( (error) => {
         this.setState({ loading: false })
         console.warn("_authenticateUser Sign In Error", error);
       });
-
     })
-
   }
 
   /** Metodo que reviza si hay error al autenticar, sino manda a metodo _authenticateUser */
