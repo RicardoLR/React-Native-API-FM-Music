@@ -27,8 +27,7 @@ class Music extends Component {
 
 				<Scene key="root" hideNavBar type="replace">
 					<Scene key="home" component={HomeView} />
-					<Scene key="artistDetail" component={ArtistDetailView} 
-						title="Comentarios" hideNavBar={false} />
+					<Scene key="artistDetail" component={ArtistDetailView} title="Comentarios" hideNavBar={false} />
 				</Scene>
 			</Router>
 		)

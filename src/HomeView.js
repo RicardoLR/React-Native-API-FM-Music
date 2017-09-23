@@ -14,13 +14,17 @@ import { getArtists } from './api-client'
 
 export default class HomeView extends Component {
   
-	state = {
-    	artists: null
-  	}
+  constructor(props) {
+    super(props);
 
-  	componentDidMount() {
-    	getArtists().then(artists => this.setState({ artists }))
-  	}
+		this.state = {
+			artists: null
+		}
+  }
+
+	componentDidMount() {
+		getArtists().then(artists => this.setState({ artists }))
+	}
 
 	/** en return, IF =>  {!artists && <ActivityIndicator size="large" />} */
 	render() { 
@@ -37,11 +41,11 @@ export default class HomeView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-    paddingTop: Platform.select({
-      ios: 30,
-      android: 10
-    }),
+	flex: 1,
+	backgroundColor: 'lightgray',
+	paddingTop: Platform.select({
+	  ios: 30,
+	  android: 10
+	}),
   },
 });

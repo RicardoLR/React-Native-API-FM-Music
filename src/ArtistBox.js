@@ -20,7 +20,7 @@ export default class ArtistBox extends Component {
 	constructor(props) {
 		super(props);
 			
-		state = {
+		this.state = {
 			liked: null,
 			likeCount: null,
 		}
